@@ -21,13 +21,13 @@ class GamePagingSource(private val apiService: ApiService) :
     }
 
 
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ResultsItem> {
         return try {
 
             val position = params.key ?: INITIAL_PAGE_INDEX
 
-            val responsDataList = apiService.getAllGamesPaging(page = position, size = params.loadSize)
+            val responsDataList =
+                apiService.getAllGamesPaging(page = position, size = params.loadSize)
 
             val responseData = processResults(responsDataList.results)
 

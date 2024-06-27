@@ -38,12 +38,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
-                android:textSize="16sp"
-                android:ellipsize="end"
                 android:scrollHorizontally="true"
-                android:maxLines="2"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="@tools:sample/lorem/random" />
 
@@ -52,11 +52,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1"
                 tools:text="@tools:sample/lorem" />
 
             <TextView
@@ -64,13 +64,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:gravity="center_vertical"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:textSize="14sp"
-                android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/ic_rate"
                 tools:text="@tools:sample/lorem" />
-
 
 
         </LinearLayout>

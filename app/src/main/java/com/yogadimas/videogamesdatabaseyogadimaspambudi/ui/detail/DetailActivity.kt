@@ -1,12 +1,16 @@
 package com.yogadimas.videogamesdatabaseyogadimaspambudi.ui.detail
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import coil.load
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.R
+import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.local.database.entities.GameFavoriteEntity
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GameDetailResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.databinding.ActivityDetailBinding
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.ui.factory.ViewModelFactory
@@ -22,6 +26,8 @@ class DetailActivity : AppCompatActivity() {
 
     private var id by Delegates.notNull<Int>()
 
+    private var isFavorite = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -33,9 +39,8 @@ class DetailActivity : AppCompatActivity() {
             toolbar.setNavigationOnClickListener { finish() }
         }
 
-
-
         getDetailGame()
+        getIsFavoriteOrGetFavoriteGameById()
     }
 
     private fun getDetailGame() {
@@ -45,32 +50,85 @@ class DetailActivity : AppCompatActivity() {
                     showLoading(false)
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
+
                 is Resource.Loading -> showLoading(true)
-                is Resource.Success ->  {
+                is Resource.Success -> {
                     showLoading(false)
-                        setGame(it.data)
+                    binding.tvRate.visibility = View.VISIBLE
+                    binding.tvFavorite.visibility = View.VISIBLE
+
+                    setGame(it.data)
+                }
+            }
+        }
+
+    }
+
+    private fun getIsFavoriteOrGetFavoriteGameById() {
+        detailViewModel.getFavoriteGameById(id).observe(this) {
+            try {
+                if (!it.equals(null)) {
+                    isFavorite = true
+                    setFavoriteState(R.drawable.ic_favorite_selected, R.color.md_theme_error)
+                }
+            } catch (e: NullPointerException) {
+                isFavorite = false
+                setFavoriteState(R.drawable.ic_favorite_normal, R.color.md_theme_onSurface)
+            }
+        }
+
+    }
+
+    private fun setGame(game: GameDetailResponse?) {
+        binding.apply {
+            ivGame.load(game?.backgroundImage) {
+                crossfade(true)
+                placeholder(R.drawable.placholder_image)
+                error(R.drawable.error_image)
+            }
+            tvPublisher.text = game?.publishers?.first()?.name
+            tvName.text = game?.name
+            tvDateRelease.text = game?.released
+            tvRate.text = game?.rating.toString().toDouble().toString()
+            tvDesc.text = game?.descriptionRaw
+            tvFavorite.setOnClickListener {
+                val gameFavorite = GameFavoriteEntity(
+                    game?.id ?: 0,
+                    game?.backgroundImage,
+                    game?.name,
+                    game?.released,
+                    game?.rating.toString().toDouble(),
+                    game?.descriptionRaw,
+                )
+                if ((isFavorite)) {
+                    detailViewModel.deleteFavoriteGame(gameFavorite)
+                } else {
+                    detailViewModel.insertFavoriteGame(gameFavorite)
                 }
             }
         }
     }
 
-    private fun setGame(it: GameDetailResponse?) {
-        binding.apply {
-            ivGame.load(it?.backgroundImage) {
-                crossfade(true)
-                placeholder(R.drawable.placholder_image)
-                error(R.drawable.error_image)
-            }
-            tvPublisher.text = it?.publishers?.first()?.name
-            tvName.text = it?.name
-            tvDateRelease.text = it?.released
-            tvRate.text = it?.rating.toString().toDouble().toString()
-            tvDesc.text = it?.descriptionRaw
+    private fun showLoading(boolean: Boolean) {
+        binding.mainProgressBar.visibility = if (boolean) {
+            binding.tvRate.visibility = View.GONE
+            binding.tvFavorite.visibility = View.GONE
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
-    private fun showLoading(boolean: Boolean) {
-        binding.mainProgressBar.visibility = if (boolean) View.VISIBLE else View.GONE
+    private fun setFavoriteState(drawable: Int, color: Int) {
+        val textView = binding.tvFavorite
+        val drawableLeft = ContextCompat.getDrawable(this, drawable)
+        val colorFilter = PorterDuffColorFilter(
+            ContextCompat.getColor(applicationContext, color),
+            PorterDuff.Mode.SRC_IN
+        )
+
+        drawableLeft?.colorFilter = colorFilter
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, null, null, null)
     }
 
     companion object {

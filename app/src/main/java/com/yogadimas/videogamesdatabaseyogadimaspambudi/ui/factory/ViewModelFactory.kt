@@ -19,12 +19,15 @@ class ViewModelFactory private constructor(private val gameRepository: GameRepos
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 return HomeViewModel(gameRepository) as T
             }
+
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 return FavoriteViewModel(gameRepository) as T
             }
+
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
                 return DetailViewModel(gameRepository) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

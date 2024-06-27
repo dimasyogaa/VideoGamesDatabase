@@ -1,8 +1,11 @@
 package com.yogadimas.videogamesdatabaseyogadimaspambudi.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.local.database.dao.GameFavoriteDao
+import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.local.database.entities.GameFavoriteEntity
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GameDetailResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GamesListResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.ResultsItem
@@ -17,11 +20,8 @@ import retrofit2.HttpException
 
 class GameRepository private constructor(
     private val apiService: ApiService,
-    // private val userDao: UserDao,
+    private val gameFavoriteDao: GameFavoriteDao,
 ) {
-
-
-
     fun getAllGames(): Flow<Resource<GamesListResponse>> = flow {
         try {
             emit(Resource.Loading())
@@ -66,18 +66,27 @@ class GameRepository private constructor(
         ).flow
     }
 
+    fun getFavoriteGame(): LiveData<List<GameFavoriteEntity>> = gameFavoriteDao.getFavUser()
+    fun getFavoriteGameById(id: Int): LiveData<GameFavoriteEntity> =
+        gameFavoriteDao.getFavoriteGameById(id)
+
+    suspend fun insertFavoriteGame(game: GameFavoriteEntity) = gameFavoriteDao.insertFavUser(game)
+
+    suspend fun deleteFavoriteGame(game: GameFavoriteEntity) = gameFavoriteDao.deleteFavUser(game)
+
+
     companion object {
 
         @Volatile
         private var instance: GameRepository? = null
         fun getInstance(
             apiService: ApiService,
-            // newsDao: UserDao,
+            gameFavoriteDao: GameFavoriteDao,
         ): GameRepository =
             instance ?: synchronized(this) {
                 instance ?: GameRepository(
                     apiService,
-                    // newsDao
+                    gameFavoriteDao
                 )
             }.also { instance = it }
     }

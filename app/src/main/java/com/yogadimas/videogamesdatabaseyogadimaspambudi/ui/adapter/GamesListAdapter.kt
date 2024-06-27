@@ -38,6 +38,7 @@ class GamesListAdapter(private val itemClickCallback: OnItemClickCallback<Result
                 }
                 tvName.text = data.name
                 tvDateRelease.text = data.released
+                tvRate.text = data.rating.toString().toDouble().toString()
                 itemView.setOnClickListener { itemClickCallback.onItemClicked(data) }
             }
 

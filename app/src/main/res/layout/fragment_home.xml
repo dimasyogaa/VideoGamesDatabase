@@ -9,9 +9,9 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:background="@color/md_theme_surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/md_theme_surface"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -76,7 +76,6 @@
     </androidx.core.widget.NestedScrollView>
 
 
-
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/mainProgressBar"
         android:layout_width="wrap_content"
@@ -88,12 +87,12 @@
         android:visibility="gone"
         app:trackThickness="4dp" />
 
-<!--    <include-->
-<!--        android:id="@+id/view_handle"-->
-<!--        layout="@layout/layout_handle_data_connection"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center" />-->
+    <!--    <include-->
+    <!--        android:id="@+id/view_handle"-->
+    <!--        layout="@layout/layout_handle_data_connection"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center" />-->
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

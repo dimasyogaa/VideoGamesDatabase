@@ -56,19 +56,25 @@ class HomeFragment : Fragment() {
                 .setOnEditorActionListener { _, _, _ ->
 
                     searchBar.setText(searchView.text)
-                    homeViewModel.getSearchGame(searchView.text.toString().trim()).observe(viewLifecycleOwner)  {
-                        when (it) {
-                            is Resource.Error -> {
-                                showLoading(false)
-                                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
-                            }
-                            is Resource.Loading -> showLoading(true)
-                            is Resource.Success ->  {
-                                showLoading(false)
-                                adapter.submitList(it.data?.results)
+                    homeViewModel.getSearchGame(searchView.text.toString().trim())
+                        .observe(viewLifecycleOwner) {
+                            when (it) {
+                                is Resource.Error -> {
+                                    showLoading(false)
+                                    Toast.makeText(
+                                        requireActivity(),
+                                        it.message,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                is Resource.Loading -> showLoading(true)
+                                is Resource.Success -> {
+                                    showLoading(false)
+                                    adapter.submitList(it.data?.results)
+                                }
                             }
                         }
-                    }
 
                     searchView.hide()
 
@@ -110,8 +116,9 @@ class HomeFragment : Fragment() {
                     showLoading(false)
                     Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
                 }
+
                 is Resource.Loading -> showLoading(true)
-                is Resource.Success ->  {
+                is Resource.Success -> {
                     showLoading(false)
                     adapter.submitList(it.data?.results)
                 }
@@ -144,8 +151,6 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 
 
 }
