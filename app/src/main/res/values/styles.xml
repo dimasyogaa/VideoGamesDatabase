@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Custom - App Bar -->
+    <style name="Widget.App.AppBar" parent="Widget.Material3.AppBarLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.AppCompat.DayNight.ActionBar</item>
+    </style>
+
+
+    <style name="ThemeOverlay.AppCompat.DayNight.ActionBar" parent="">
+        <item name="colorSurface">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Custom - Toolbar -->
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+    </style>
+
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="titleTextColor">?attr/colorOnSurfaceInverse</item>
+        <item name="colorControlNormal">?attr/colorOnSurfaceInverse</item>
+    </style>
+
+    <!-- Textview    -->
+    <style name="CustomTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/md_theme_onSurface</item>
+    </style>
+
+    <!-- Custom - Rounded Style  -->
+    <style name="rounded">
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="rounded.circle">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="rounded.custom">
+        <item name="cornerSizeBottomLeft">10%</item>
+        <item name="cornerSizeBottomRight">10%</item>
+        <item name="cornerSizeTopLeft">10%</item>
+        <item name="cornerSizeTopRight">10%</item>
+    </style>
+
+</resources>

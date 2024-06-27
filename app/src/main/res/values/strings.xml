@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">VideoGamesDatabase-YogaDimasPambudi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_home">Home</string>
+    <string name="text_favorite">Favorite</string>
+    <string name="text_refresh">Refresh</string>
+
+    <string name="text_find">Cari</string>
+    <string name="retry">Coba Lagi</string>
+    <string name="text_detail">Detail</string>
+</resources>
