@@ -5,6 +5,7 @@ import com.yogadimas.videogamesdatabaseyogadimaspambudi.BuildConfig
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GameDetailResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GamesListResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -23,15 +24,16 @@ interface ApiService {
 
     @GET("games/{id}")
     suspend fun getDetailGame(
+        @Path("id") id: Int,
         @Query("key") key: String = BuildConfig.KEY
-    ): GamesListResponse
+    ): GameDetailResponse
 
     @GET("games")
     suspend fun getAllGamesPaging(
-        @Query("key") key: String = BuildConfig.KEY,
         @Query("page") page: Int,
-        @Query("page_size") size: Int
-    ): GameDetailResponse
+        @Query("page_size") size: Int,
+        @Query("key") key: String = BuildConfig.KEY
+    ): GamesListResponse
 
 
 

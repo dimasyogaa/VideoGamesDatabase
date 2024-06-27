@@ -39,8 +39,20 @@
 
     <ImageView
         android:id="@+id/iv_game"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/mainProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:visibility="gone"
+            app:trackThickness="4dp" />
 
     <TextView
         android:id="@+id/tv_publisher"
@@ -55,6 +67,8 @@
         android:layout_width="match_parent"
         android:paddingHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:layout_height="wrap_content"
         tools:text="@tools:sample/lorem"/>
 
@@ -80,6 +94,8 @@
         app:drawableStartCompat="@drawable/ic_rate"
         tools:text="@tools:sample/lorem" />
 
+
+
     <TextView
         android:id="@+id/tv_desc"
         android:layout_marginTop="24dp"
@@ -87,5 +103,6 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         tools:text="@tools:sample/lorem/random"/>
+
     </LinearLayout>
 </ScrollView>

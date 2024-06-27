@@ -3,6 +3,7 @@ package com.yogadimas.videogamesdatabaseyogadimaspambudi.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GameDetailResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.GamesListResponse
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.model.ResultsItem
 import com.yogadimas.videogamesdatabaseyogadimaspambudi.data.networking.ApiService
@@ -43,10 +44,10 @@ class GameRepository private constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getDetailGame(keyword: String): Flow<Resource<GamesListResponse>> = flow {
+    fun getDetailGame(id: Int): Flow<Resource<GameDetailResponse>> = flow {
         try {
             emit(Resource.Loading())
-            val response = apiService.getSearchGame(keyword = keyword)
+            val response = apiService.getDetailGame(id = id)
             emit(Resource.Success(response))
         } catch (exception: Exception) {
             val e = (exception as? HttpException)?.response()?.errorBody()?.string()
